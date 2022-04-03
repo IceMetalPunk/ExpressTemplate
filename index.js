@@ -9,7 +9,6 @@ import startup from './startup.js'
 dotenv.config();
 const PORT = process.env.PORT || 4000;
 const app = express();
-app.use(express.static('public'));
 
 startup(app, PORT)
 .then(({ secure, server }) => {
@@ -17,7 +16,8 @@ startup(app, PORT)
 })
 .catch(env => {
     console.log(`Failed to listen on port ${PORT} because enironment is ${env}`);
-})
+});
+app.use(express.static('public'));
 
 // TODO: Change to real endpoints
 app.get('/test', (req, res) => res.send('Yes, it works!'));
